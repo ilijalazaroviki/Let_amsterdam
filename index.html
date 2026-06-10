@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="mk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Одбројување до летот: Даблин ✈ Амстердам</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body, html {
+            width: 100%;
+            height: 100%;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background: linear-gradient(135deg, #e65c00 0%, #F9D423 100%); /* Портокалов холандски стил */
+            color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            text-align: center;
+            position: relative;
+        }
+
+        body::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.4); /* Блага сенка за подобра читливост */
+            z-index: 1;
+        }
+
+        .container {
+            position: relative;
+            z-index: 2;
+            padding: 20px;
+            width: 100%;
+        }
+
+        h1 {
+            font-size: 2.8rem;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.4);
+        }
+
+        h2 {
+            font-size: 1.6rem;
+            color: #ffffff; 
+            margin-bottom: 40px;
+            font-weight: 400;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.4);
+        }
+
+        .airport-code {
+            font-weight: 700;
+            color: #F9D423;
+        }
+
+        .countdown-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 25px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        .time-box {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 25px 35px;
+            border-radius: 15px;
+            min-width: 150px;
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
+        }
+
+        .number {
+            font-size: 5rem;
+            font-weight: 700;
+            line-height: 1;
+            display: block;
+            margin-bottom: 5px;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .label {
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #f8fafc;
+        }
+
+        /* Стил за поситниот текст за времето на летот под часовникот */
+        .flight-info-text {
+            margin-top: 40px;
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.8);
+            letter-spacing: 1px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 2rem; }
+            h2 { font-size: 1.2rem; margin-bottom: 25px; }
+            .time-box { padding: 15px 20px; min-width: 110px; }
+            .number { font-size: 3.2rem; }
+            .label { font-size: 0.9rem; }
+            .flight-info-text { font-size: 0.9rem; margin-top: 30px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Следна дестинација: Холандија!</h1>
+        <h2>
+            <span>🍀 Даблин <span class="airport-code">(DUB)</span></span>
+            <span>✈</span>
+            <span>🌷 Амстердам <span class="airport-code">(AMS)</span></span>
+        </h2>
+        
+        <div class="countdown-wrapper">
+            <div class="time-box">
+                <span class="number" id="days">00</span>
+                <span class="label">Денови</span>
+            </div>
+            <div class="time-box">
+                <span class="number" id="hours">00</span>
+                <span class="label">Часови</span>
+            </div>
+            <div class="time-box">
+                <span class="number" id="minutes">00</span>
+                <span class="label">Минути</span>
+            </div>
+            <div class="time-box">
+                <span class="number" id="seconds">00</span>
+                <span class="label">Секунди</span>
+            </div>
+        </div>
+
+        <div class="flight-info-text">
+            Време на лет: 26 Септември 2026 во 05:55
+        </div>
+    </div>
+
+    <script>
+        // Точниот датум и час за Амстердам: 26 Септември 2026 во 05:55
+        const flightDate = new Date("Sep 26, 2026 05:55:00").getTime();
+
+        const timer = setInterval(function() {
+            const now = new Date().getTime();
+            const distance = flightDate - now;
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            const formatTime = (num) => num < 10 ? "0" + num : num;
+
+            document.getElementById("days").innerHTML = formatTime(days);
+            document.getElementById("hours").innerHTML = formatTime(hours);
+            document.getElementById("minutes").innerHTML = formatTime(minutes);
+            document.getElementById("seconds").innerHTML = formatTime(seconds);
+
+            if (distance < 0) {
+                clearInterval(timer);
+                document.querySelector(".container").innerHTML = `
+                    <h1 style="font-size: 4rem; margin-bottom: 20px;">Добредојдовте во Амстердам! ✈🌷</h1>
+                `;
+            }
+        }, 1000);
+    </script>
+</body>
+</html>
