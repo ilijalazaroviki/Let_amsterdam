@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="mk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Одбројување до летот: Даблин ✈ Амстердам | KLM</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body, html {
+            width: 100%;
+            height: 100%;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            /* Прекрасна и кристално чиста слика од авион во лет на прекрасно сино небо */
+            background-image: url('https://images.unsplash.com/photo-1483450388369-9ed95738483c?auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        /* Сино-темен заштитен слој во стилот на KLM за совршена читливост */
+        body::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(0, 48, 135, 0.65) 0%, rgba(0, 20, 60, 0.8) 100%);
+            z-index: 1;
+        }
+
+        /* Навигациско мени најгоре со точните апсолутни линкови */
+        .navbar {
+            width: 100%;
+            background: rgba(0, 48, 135, 0.85); /* Препознатлива KLM темно сина */
+            backdrop-filter: blur(10px);
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 10;
+        }
+
+        .navbar-brand {
+            font-weight: 700;
+            font-size: 1.2rem;
+            letter-spacing: 1px;
+        }
+
+        .navbar-menu {
+            display: flex;
+            gap: 20px;
+            list-style: none;
+        }
+
+        .navbar-menu a {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+            opacity: 0.7;
+            transition: opacity 0.3s;
+        }
+
+        .navbar-menu a:hover {
+            opacity: 1;
+        }
+
+        .main-content {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding-top: 80px;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .container {
+            padding: 20px;
+            width: 100%;
+        }
+
+        h1 {
+            font-size: 2.8rem;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 700;
+            text-shadow: 2px 2px 5px rgba(0,0,0,0.6);
+        }
+
+        h2 {
+            font-size: 1.6rem;
+            color: #ffffff; 
+            margin-bottom: 40px;
+            font-weight: 400;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+        }
+
+        .airport-code {
+            font-weight: 700;
+            color: #00A1DE; /* Препознатлива светло сина боја на KLM */
+        }
+
+        .countdown-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 25px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        .time-box {
+            background: rgba(255, 255, 255, 0.08);
+            padding: 25px 35px;
+            border-radius: 15px;
+            min-width: 150px;
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
+            transition: transform 0.3s ease;
+        }
+
+        .time-box:hover {
+            transform: translateY(-5px);
+        }
+
+        .number {
+            font-size: 5rem;
+            font-weight: 700;
+            line-height: 1;
+            display: block;
+            margin-bottom: 5px;
+            font-variant-numeric: tabular-nums;
+            text-shadow: 1px 1px 4px rgba(0,0,0,0.4);
+            color: #ffffff;
+        }
+
+        .label {
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #cbd5e1;
+        }
+
+        /* Детали за летот со стаклен ефект */
+        .flight-details {
+            margin-top: 45px;
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.9);
+            letter-spacing: 1px;
+            background: rgba(0, 48, 135, 0.5);
+            display: inline-block;
+            padding: 12px 25px;
+            border-radius: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(5px);
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+        }
+
+        .highlight {
+            color: #00A1DE; /* Светло сина KLM нијанса */
+            font-weight: 600;
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 1.9rem; }
+            h2 { font-size: 1.2rem; margin-bottom: 25px; }
+            .time-box { padding: 15px 20px; min-width: 100px; }
+            .number { font-size: 3rem; }
+            .label { font-size: 0.8rem; }
+            .flight-details { font-size: 0.9rem; padding: 10px 20px; }
+            .navbar { padding: 15px; }
+            .navbar-menu { gap: 12px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Навигациско мени со точните линкови до твоите три проекти -->
+    <nav class="navbar">
+        <div class="navbar-brand">✈️ Мои Летови</div>
+        <ul class="navbar-menu">
+            <li><a href="https://ilijalazaroviki.github.io/LetFaroPortugal/">Почетна</a></li>
+            <li><a href="https://ilijalazaroviki.github.io/LetFaroPortugal/">Фаро</a></li>
+            <li><a href="https://ilijalazaroviki.github.io/Let_amsterdam/" style="opacity: 1; font-weight: 700; border-bottom: 2px solid #00A1DE;">Амстердам</a></li>
+            <li><a href="https://ilijalazaroviki.github.io/FlighttoCopenhagen/index.html">Копенхаген</a></li>
+        </ul>
+    </nav>
+
+    <div class="main-content">
+        <div class="container">
+            <h1>Следна Дестинација: Холандија!</h1>
+            <h2>
+                <span>🍀 Даблин <span class="airport-code">(DUB)</span></span>
+                <span>✈</span>
+                <span>🌷 Амстердам <span class="airport-code">(AMS)</span></span>
+            </h2>
+            
+            <div class="countdown-wrapper">
+                <div class="time-box">
+                    <span class="number" id="days">00</span>
+                    <span class="label">Денови</span>
+                </div>
+                <div class="time-box">
+                    <span class="number" id="hours">00</span>
+                    <span class="label">Часови</span>
+                </div>
+                <div class="time-box">
+                    <span class="number" id="minutes">00</span>
+                    <span class="label">Минути</span>
+                </div>
+                <div class="time-box">
+                    <span class="number" id="seconds">00</span>
+                    <span class="label">Секунди</span>
+                </div>
+            </div>
+
+            <!-- Детали за летот со точни информации за KLM -->
+            <div class="flight-details">
+                Време на лет: <span class="highlight">26 Септември 2026 во 05:55</span> • Летот е опериран од <span class="highlight">KLM</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Точниот датум за полетување до Амстердам (26 Септември 2026 во 05:55:00)
+        const flightDate = new Date("Sep 26, 2026 05:55:00").getTime();
+
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const distance = flightDate - now;
+
+            // Доколку летот веќе поминал
+            if (distance < 0) {
+                document.getElementById("days").innerText = "00";
+                document.getElementById("hours").innerText = "00";
+                document.getElementById("minutes").innerText = "00";
+                document.getElementById("seconds").innerText = "00";
+                clearInterval(timer);
+                return;
+            }
+
+            // Пресметување на преостанатото време
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            // Формат со водечка нула
+            const formatTime = (num) => num < 10 ? "0" + num : num;
+
+            // Приказ на вредностите во соодветните кутии
+            document.getElementById("days").innerText = formatTime(days);
+            document.getElementById("hours").innerText = formatTime(hours);
+            document.getElementById("minutes").innerText = formatTime(minutes);
+            document.getElementById("seconds").innerText = formatTime(seconds);
+        }
+
+        // Стартувај веднаш при вчитување
+        updateCountdown();
+
+        // Постави ажурирање на секоја секунда
+        const timer = setInterval(updateCountdown, 1000);
+    </script>
+</body>
+</html>
